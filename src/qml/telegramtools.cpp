@@ -26,7 +26,7 @@ QByteArray TelegramTools::identifier(qint32 peerType, qint32 peerId)
 QByteArray TelegramTools::identifier(const Peer &peer)
 {
     QByteArray res;
-    switch(static_cast<int>(peer.classType()))
+    switch(static_cast<uint>(peer.classType()))
     {
     case Peer::typePeerChannel:
         res = identifier(peer.classType(), peer.channelId());
@@ -124,7 +124,7 @@ InputPeer TelegramTools::chatInputPeer(const Chat &chat)
 {
     InputPeer res;
     res.setAccessHash(chat.accessHash());
-    switch(static_cast<int>(chat.classType()))
+    switch(static_cast<uint>(chat.classType()))
     {
     case Chat::typeChat:
         res.setClassType(InputPeer::typeInputPeerChat);
@@ -207,7 +207,7 @@ SecretChat *TelegramTools::inputPeerSecretChat(const InputPeer &inputPeer, Teleg
 Peer TelegramTools::chatPeer(const Chat &chat)
 {
     Peer peer;
-    switch(static_cast<int>(chat.classType()))
+    switch(static_cast<uint>(chat.classType()))
     {
     case Chat::typeChat:
     case Chat::typeChatForbidden:
@@ -226,7 +226,7 @@ Peer TelegramTools::chatPeer(const Chat &chat)
 Peer TelegramTools::userPeer(const User &user)
 {
     Peer peer;
-    switch(static_cast<int>(user.classType()))
+    switch(static_cast<uint>(user.classType()))
     {
     case User::typeUser:
         peer.setClassType(Peer::typePeerUser);
@@ -281,7 +281,7 @@ Peer TelegramTools::inputPeerPeer(const InputPeer &inputPeer)
 InputMedia TelegramTools::mediaInputMedia(const MessageMedia &media)
 {
     InputMedia result;
-    switch(static_cast<int>(media.classType()))
+    switch(static_cast<uint>(media.classType()))
     {
     case MessageMedia::typeMessageMediaDocument:
     {
@@ -569,14 +569,14 @@ TelegramEnums::MessageType TelegramTools::messageType(TQmlMessageObject *msg)
     if(!msg)
         return TelegramEnums::TypeUnsupportedMessage;
 
-    switch(static_cast<int>(msg->classType()))
+    switch(static_cast<uint>(msg->classType()))
     {
     case TQmlMessageObject::TypeMessage:
     {
         if(!msg->media())
             return TelegramEnums::TypeTextMessage;
 
-        switch(static_cast<int>(msg->media()->classType()))
+        switch(static_cast<uint>(msg->media()->classType()))
         {
         case MessageMediaObject::TypeMessageMediaEmpty:
             return TelegramEnums::TypeTextMessage;
@@ -603,7 +603,7 @@ TelegramEnums::MessageType TelegramTools::messageType(TQmlMessageObject *msg)
                     return TelegramEnums::TypeAnimatedMessage;
             Q_FOREACH(const DocumentAttribute &attr, msg->media()->document()->attributes())
             {
-                switch(static_cast<int>(attr.classType()))
+                switch(static_cast<uint>(attr.classType()))
                 {
                 case DocumentAttribute::typeDocumentAttributeAudio:
                     return TelegramEnums::TypeAudioMessage;
@@ -664,7 +664,7 @@ void TelegramTools::analizeUpdatesType(const UpdatesType &updates, TelegramEngin
     TelegramSharedDataManager *tsdm = engine->sharedData();
     QSet< TelegramSharedPointer<TelegramTypeQObject> > cache;
 
-    switch(static_cast<int>(updates.classType()))
+    switch(static_cast<uint>(updates.classType()))
     {
     case UpdatesType::typeUpdatesTooLong:
         break;

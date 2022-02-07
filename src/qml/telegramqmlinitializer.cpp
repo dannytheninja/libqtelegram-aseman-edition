@@ -354,7 +354,7 @@ QString TelegramQmlInitializer::exportItem(const QString &module, int major, int
         }
 
         QString text = QString(" * %1 <font color='#074885'><b>%2</b></font>(%3)\n").arg(methodType).arg(methodName).arg(args);
-        switch(static_cast<int>(method.methodType()))
+        switch(static_cast<uint>(method.methodType()))
         {
         case QMetaMethod::Slot:
             resultSlots += text;
